@@ -1,13 +1,19 @@
 import { awscdk } from 'projen';
+import { CdkCICDWrapper } from '@cdklabs/cdk-cicd-wrapper-projen';
+
 const project = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: '2.1.0',
   defaultReleaseBranch: 'main',
-  name: 'zero2prod.cdk',
+  deps: ['@cdklabs/cdk-cicd-wrapper'],
+  name: 'project',
   projenrcTs: true,
-
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
 });
+
+//@ts-ignore Projen Versions can be different during the upgrade process and would resolve complains about assignability issues.
+new CdkCICDWrapper(project, {
+  cdkQualifier: 'wrapper',
+  repositoryName: 'scudzey/zero2prod.cdk',
+  repositoryType: 'GITHUB',
+});
+
 project.synth();
