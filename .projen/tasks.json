@@ -1,61 +1,10 @@
 {
   "tasks": {
-    "_bootstrap:DEV": {
-      "name": "_bootstrap:DEV",
-      "description": "Command to bootstrap your DEV account",
-      "steps": [
-        {
-          "say": "Bootstrapping your DEV account..."
-        },
-        {
-          "exec": "cross-env cdk bootstrap --profile $DEV_ACCOUNT_AWS_PROFILE --qualifier $CDK_QUALIFIER           --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess           --trust ${ACCOUNT_RES} aws://${ACCOUNT_DEV}/${AWS_REGION}",
-          "receiveArgs": false,
-          "env": {
-            "CDK_QUALIFIER": "wrapper"
-          }
-        }
-      ],
-      "condition": "[ ! -n \"$CI\" ]"
-    },
-    "_bootstrap:INT": {
-      "name": "_bootstrap:INT",
-      "description": "Command to bootstrap your INT account",
-      "steps": [
-        {
-          "say": "Bootstrapping your INT account..."
-        },
-        {
-          "exec": "cross-env cdk bootstrap --profile $INT_ACCOUNT_AWS_PROFILE --qualifier $CDK_QUALIFIER           --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess           --trust ${ACCOUNT_RES} aws://${ACCOUNT_INT}/${AWS_REGION}",
-          "receiveArgs": false,
-          "env": {
-            "CDK_QUALIFIER": "wrapper"
-          }
-        }
-      ],
-      "condition": "[ ! -n \"$CI\" ]"
-    },
-    "_bootstrap:RES": {
-      "name": "_bootstrap:RES",
-      "description": "Command to bootstrap your RES account",
-      "steps": [
-        {
-          "say": "Bootstrapping your RES account..."
-        },
-        {
-          "exec": "cross-env cdk bootstrap --profile $RES_ACCOUNT_AWS_PROFILE --qualifier $CDK_QUALIFIER        aws://${ACCOUNT_RES}/${AWS_REGION}",
-          "receiveArgs": false,
-          "env": {
-            "CDK_QUALIFIER": "wrapper"
-          }
-        }
-      ],
-      "condition": "[ ! -n \"$CI\" ]"
-    },
     "_deploy": {
       "name": "_deploy",
       "steps": [
         {
-          "exec": "cross-env cdk deploy --profile $RES_ACCOUNT_AWS_PROFILE --all",
+          "exec": "cross-env cdk deploy --profile $AWS_PROFILE",
           "receiveArgs": true
         }
       ]
@@ -64,7 +13,7 @@
       "name": "_destroy",
       "steps": [
         {
-          "exec": "cross-env cdk destroy --profile $RES_ACCOUNT_AWS_PROFILE",
+          "exec": "cross-env cdk destroy --profile $AWS_PROFILE",
           "receiveArgs": true
         }
       ]
@@ -73,7 +22,7 @@
       "name": "_diff",
       "steps": [
         {
-          "exec": "cross-env cdk diff --profile $RES_ACCOUNT_AWS_PROFILE",
+          "exec": "cross-env cdk diff --profile $AWS_PROFILE",
           "receiveArgs": true
         }
       ]
@@ -82,62 +31,10 @@
       "name": "_synth",
       "steps": [
         {
-          "exec": "cross-env cdk synth --profile $RES_ACCOUNT_AWS_PROFILE",
+          "exec": "cross-env cdk synth --profile $AWS_PROFILE",
           "receiveArgs": true
         }
       ]
-    },
-    "_workbench": {
-      "name": "_workbench",
-      "steps": [
-        {
-          "exec": "cross-env cdk deploy --profile $DEV_ACCOUNT_AWS_PROFILE -c \"workbench=true\"",
-          "receiveArgs": true
-        }
-      ]
-    },
-    "_workbench:destroy": {
-      "name": "_workbench:destroy",
-      "steps": [
-        {
-          "exec": "cross-env cdk destroy --profile $DEV_ACCOUNT_AWS_PROFILE -c \"workbench=true\"",
-          "receiveArgs": true
-        }
-      ]
-    },
-    "_workbench:synth": {
-      "name": "_workbench:synth",
-      "steps": [
-        {
-          "exec": "cross-env cdk synth --profile $DEV_ACCOUNT_AWS_PROFILE -c \"workbench=true\"",
-          "receiveArgs": true
-        }
-      ]
-    },
-    "audit": {
-      "name": "audit",
-      "steps": [
-        {
-          "spawn": "check-dependencies"
-        },
-        {
-          "spawn": "license"
-        },
-        {
-          "spawn": "security-scan"
-        }
-      ]
-    },
-    "bootstrap": {
-      "name": "bootstrap",
-      "description": "Command to bootstrap your account",
-      "steps": [
-        {
-          "exec": "dotenv -- npm run _bootstrap:$@",
-          "receiveArgs": true
-        }
-      ],
-      "condition": "[ ! -n \"$CI\" ]"
     },
     "build": {
       "name": "build",
@@ -172,16 +69,6 @@
       "steps": [
         {
           "exec": "dotenv -- cross-env cdk ls"
-        }
-      ]
-    },
-    "check-dependencies": {
-      "name": "check-dependencies",
-      "description": "Notice file checking and generation",
-      "steps": [
-        {
-          "exec": "cdk-cicd check-dependencies",
-          "receiveArgs": true
         }
       ]
     },
@@ -285,53 +172,6 @@
         }
       ]
     },
-    "info": {
-      "name": "info",
-      "steps": [
-        {
-          "say": "Information:"
-        },
-        {
-          "exec": "cross-env echo \"AWS Region : $(dotenv -p AWS_REGION)\""
-        },
-        {
-          "exec": "cross-env echo \"RES Account: $(dotenv -p ACCOUNT_RES)\""
-        },
-        {
-          "exec": "cross-env echo \"AWS Profile: $(dotenv -p RES_ACCOUNT_AWS_PROFILE)\""
-        },
-        {
-          "exec": "cross-env echo \"Workbench stage\": $WORKBENCH_STAGE"
-        },
-        {
-          "exec": "cross-env echo \"Workbench profile\": $WORKBENCH_AWS_PROFILE"
-        },
-        {
-          "exec": "cross-env echo \"CDK Qualifier: ${CDK_QUALIFIER}\"",
-          "env": {
-            "CDK_QUALIFIER": "wrapper"
-          }
-        },
-        {
-          "say": "Accounts:"
-        },
-        {
-          "exec": "cross-env echo \"  - ${stage}: $(dotenv -p ACCOUNT_${stage}) -- profile: $(dotenv -p ${stage}_ACCOUNT_AWS_PROFILE)\"",
-          "env": {
-            "stage": "DEV"
-          }
-        },
-        {
-          "exec": "cross-env echo \"  - ${stage}: $(dotenv -p ACCOUNT_${stage}) -- profile: $(dotenv -p ${stage}_ACCOUNT_AWS_PROFILE)\"",
-          "env": {
-            "stage": "INT"
-          }
-        },
-        {
-          "spawn": "cdkls"
-        }
-      ]
-    },
     "install": {
       "name": "install",
       "description": "Install project dependencies and update lockfile (non-frozen)",
@@ -347,24 +187,6 @@
       "steps": [
         {
           "exec": "yarn install --check-files --frozen-lockfile"
-        }
-      ]
-    },
-    "license": {
-      "name": "license",
-      "description": "Notice file checking and generation",
-      "steps": [
-        {
-          "exec": "cdk-cicd license",
-          "receiveArgs": true
-        }
-      ]
-    },
-    "lint": {
-      "name": "lint",
-      "steps": [
-        {
-          "spawn": "eslint"
         }
       ]
     },
@@ -388,33 +210,6 @@
     "pre-compile": {
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
-    },
-    "security-scan": {
-      "name": "security-scan",
-      "description": "Notice file checking and generation",
-      "steps": [
-        {
-          "exec": "cdk-cicd security-scan",
-          "receiveArgs": true,
-          "args": [
-            "--bandit",
-            "--semgrep",
-            "--shellcheck",
-            "-ci"
-          ],
-          "condition": "[ -n \"$CI\" ]"
-        },
-        {
-          "exec": "cdk-cicd security-scan --bandit --semgrep --shellcheck",
-          "receiveArgs": true,
-          "args": [
-            "--bandit",
-            "--semgrep",
-            "--shellcheck"
-          ],
-          "condition": "[ ! -n \"$CI\" ]"
-        }
-      ]
     },
     "synth": {
       "name": "synth",
@@ -465,28 +260,19 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,cross-env,dotenv-cli,esbuild,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,ts-node,typescript,@cdklabs/cdk-cicd-wrapper,@cdklabs/cdk-cicd-wrapper-cli,@cdklabs/cdk-cicd-wrapper-projen,cdk-nag"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,cross-env,dotenv-cli,esbuild,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,ts-node,typescript"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk cross-env dotenv-cli esbuild eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest ts-node typescript @cdklabs/cdk-cicd-wrapper @cdklabs/cdk-cicd-wrapper-cli @cdklabs/cdk-cicd-wrapper-projen aws-cdk-lib cdk-nag constructs"
+          "exec": "yarn upgrade @stylistic/eslint-plugin @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk cross-env dotenv-cli esbuild eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest ts-node typescript aws-cdk-lib constructs"
         },
         {
           "exec": "npx projen"
         },
         {
           "spawn": "post-upgrade"
-        }
-      ]
-    },
-    "validate": {
-      "name": "validate",
-      "steps": [
-        {
-          "exec": "cdk-cicd validate",
-          "receiveArgs": true
         }
       ]
     },
@@ -499,33 +285,6 @@
         },
         {
           "exec": "cdk watch"
-        }
-      ]
-    },
-    "workbench": {
-      "name": "workbench",
-      "steps": [
-        {
-          "exec": "dotenv -- npm run _workbench",
-          "receiveArgs": true
-        }
-      ]
-    },
-    "workbench:destroy": {
-      "name": "workbench:destroy",
-      "steps": [
-        {
-          "exec": "dotenv -- npm run _workbench:destroy",
-          "receiveArgs": true
-        }
-      ]
-    },
-    "workbench:synth": {
-      "name": "workbench:synth",
-      "steps": [
-        {
-          "exec": "dotenv -- npm run _workbench:synth",
-          "receiveArgs": true
         }
       ]
     }

@@ -50,4 +50,5 @@ junit.xml
 .cdk.staging/
 .parcel-cache/
 .env
+psycopg2-layer.zip
 !/.projenrc.ts

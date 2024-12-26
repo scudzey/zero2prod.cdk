@@ -1,0 +1,1511 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot 1`] = `
+{
+  "Outputs": {
+    "ExportsOutputRefzero2prodvpc6BD971688AD6DC23": {
+      "Export": {
+        "Name": "test:ExportsOutputRefzero2prodvpc6BD971688AD6DC23",
+      },
+      "Value": {
+        "Ref": "zero2prodvpc6BD97168",
+      },
+    },
+    "ExportsOutputRefzero2prodvpczero2prodisolatedSubnet1Subnet691322E53FFB74F9": {
+      "Export": {
+        "Name": "test:ExportsOutputRefzero2prodvpczero2prodisolatedSubnet1Subnet691322E53FFB74F9",
+      },
+      "Value": {
+        "Ref": "zero2prodvpczero2prodisolatedSubnet1Subnet691322E5",
+      },
+    },
+    "ExportsOutputRefzero2prodvpczero2prodisolatedSubnet2Subnet152D1A074EC0BD96": {
+      "Export": {
+        "Name": "test:ExportsOutputRefzero2prodvpczero2prodisolatedSubnet2Subnet152D1A074EC0BD96",
+      },
+      "Value": {
+        "Ref": "zero2prodvpczero2prodisolatedSubnet2Subnet152D1A07",
+      },
+    },
+    "ExportsOutputRefzero2prodvpczero2prodpublicSubnet1SubnetB6AF6A57CBD71B58": {
+      "Export": {
+        "Name": "test:ExportsOutputRefzero2prodvpczero2prodpublicSubnet1SubnetB6AF6A57CBD71B58",
+      },
+      "Value": {
+        "Ref": "zero2prodvpczero2prodpublicSubnet1SubnetB6AF6A57",
+      },
+    },
+    "ExportsOutputRefzero2prodvpczero2prodpublicSubnet2Subnet5AB0BE33961D12E7": {
+      "Export": {
+        "Name": "test:ExportsOutputRefzero2prodvpczero2prodpublicSubnet2Subnet5AB0BE33961D12E7",
+      },
+      "Value": {
+        "Ref": "zero2prodvpczero2prodpublicSubnet2Subnet5AB0BE33",
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "zero2prodvpc6BD97168": {
+      "Properties": {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "zero2prodvpcCLOUDWATCH69DE7E47": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "zero2prodvpcCLOUDWATCHSecurityGroup3164F8FD",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".logs",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet1Subnet691322E5",
+          },
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet2Subnet152D1A07",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "zero2prodvpcCLOUDWATCHSecurityGroup3164F8FD": {
+      "Properties": {
+        "GroupDescription": "test/zero2prod-vpc/CLOUDWATCH/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "zero2prodvpc6BD97168",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "zero2prodvpc6BD97168",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "zero2prodvpcECRB7C4DE76": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "zero2prodvpcECRSecurityGroupB3A4C3F8",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".ecr.api",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet1Subnet691322E5",
+          },
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet2Subnet152D1A07",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "zero2prodvpcECRDOCKER698C90E6": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "zero2prodvpcECRDOCKERSecurityGroup7007F5F0",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".ecr.dkr",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet1Subnet691322E5",
+          },
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet2Subnet152D1A07",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "zero2prodvpcECRDOCKERSecurityGroup7007F5F0": {
+      "Properties": {
+        "GroupDescription": "test/zero2prod-vpc/ECR_DOCKER/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "zero2prodvpc6BD97168",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "zero2prodvpc6BD97168",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "zero2prodvpcECRSecurityGroupB3A4C3F8": {
+      "Properties": {
+        "GroupDescription": "test/zero2prod-vpc/ECR/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "zero2prodvpc6BD97168",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "zero2prodvpc6BD97168",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "zero2prodvpcIGW20107C8F": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::InternetGateway",
+    },
+    "zero2prodvpcS33A42B327": {
+      "Properties": {
+        "RouteTableIds": [
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet1RouteTable238EF96C",
+          },
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet2RouteTable8430DB73",
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".s3",
+            ],
+          ],
+        },
+        "VpcEndpointType": "Gateway",
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "zero2prodvpcSECRETSMANAGERB8D11850": {
+      "Properties": {
+        "PrivateDnsEnabled": true,
+        "SecurityGroupIds": [
+          {
+            "Fn::GetAtt": [
+              "zero2prodvpcSECRETSMANAGERSecurityGroup2AF4A089",
+              "GroupId",
+            ],
+          },
+        ],
+        "ServiceName": {
+          "Fn::Join": [
+            "",
+            [
+              "com.amazonaws.",
+              {
+                "Ref": "AWS::Region",
+              },
+              ".secretsmanager",
+            ],
+          ],
+        },
+        "SubnetIds": [
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet1Subnet691322E5",
+          },
+          {
+            "Ref": "zero2prodvpczero2prodisolatedSubnet2Subnet152D1A07",
+          },
+        ],
+        "VpcEndpointType": "Interface",
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::VPCEndpoint",
+    },
+    "zero2prodvpcSECRETSMANAGERSecurityGroup2AF4A089": {
+      "Properties": {
+        "GroupDescription": "test/zero2prod-vpc/SECRETS_MANAGER/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": {
+              "Fn::GetAtt": [
+                "zero2prodvpc6BD97168",
+                "CidrBlock",
+              ],
+            },
+            "Description": {
+              "Fn::Join": [
+                "",
+                [
+                  "from ",
+                  {
+                    "Fn::GetAtt": [
+                      "zero2prodvpc6BD97168",
+                      "CidrBlock",
+                    ],
+                  },
+                  ":443",
+                ],
+              ],
+            },
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "ToPort": 443,
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "zero2prodvpcVPCGWE1D7D0A3": {
+      "Properties": {
+        "InternetGatewayId": {
+          "Ref": "zero2prodvpcIGW20107C8F",
+        },
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+    },
+    "zero2prodvpczero2prodisolatedSubnet1RouteTable238EF96C": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc/zero2prod-isolatedSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "zero2prodvpczero2prodisolatedSubnet1RouteTableAssociationC9372BC0": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "zero2prodvpczero2prodisolatedSubnet1RouteTable238EF96C",
+        },
+        "SubnetId": {
+          "Ref": "zero2prodvpczero2prodisolatedSubnet1Subnet691322E5",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "zero2prodvpczero2prodisolatedSubnet1Subnet691322E5": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.2.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "zero2prod-isolated",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Isolated",
+          },
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc/zero2prod-isolatedSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "zero2prodvpczero2prodisolatedSubnet2RouteTable8430DB73": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc/zero2prod-isolatedSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "zero2prodvpczero2prodisolatedSubnet2RouteTableAssociation918101F5": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "zero2prodvpczero2prodisolatedSubnet2RouteTable8430DB73",
+        },
+        "SubnetId": {
+          "Ref": "zero2prodvpczero2prodisolatedSubnet2Subnet152D1A07",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "zero2prodvpczero2prodisolatedSubnet2Subnet152D1A07": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.3.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "zero2prod-isolated",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Isolated",
+          },
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc/zero2prod-isolatedSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "zero2prodvpczero2prodpublicSubnet1DefaultRoute8B9E3FFE": {
+      "DependsOn": [
+        "zero2prodvpcVPCGWE1D7D0A3",
+      ],
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "zero2prodvpcIGW20107C8F",
+        },
+        "RouteTableId": {
+          "Ref": "zero2prodvpczero2prodpublicSubnet1RouteTable1B65F81F",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "zero2prodvpczero2prodpublicSubnet1RouteTable1B65F81F": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc/zero2prod-publicSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "zero2prodvpczero2prodpublicSubnet1RouteTableAssociation35D95254": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "zero2prodvpczero2prodpublicSubnet1RouteTable1B65F81F",
+        },
+        "SubnetId": {
+          "Ref": "zero2prodvpczero2prodpublicSubnet1SubnetB6AF6A57",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "zero2prodvpczero2prodpublicSubnet1SubnetB6AF6A57": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.0.0/24",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "zero2prod-public",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc/zero2prod-publicSubnet1",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "zero2prodvpczero2prodpublicSubnet2DefaultRoute06CB1255": {
+      "DependsOn": [
+        "zero2prodvpcVPCGWE1D7D0A3",
+      ],
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "zero2prodvpcIGW20107C8F",
+        },
+        "RouteTableId": {
+          "Ref": "zero2prodvpczero2prodpublicSubnet2RouteTableDFBAC242",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "zero2prodvpczero2prodpublicSubnet2RouteTableAssociation76C54AE3": {
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "zero2prodvpczero2prodpublicSubnet2RouteTableDFBAC242",
+        },
+        "SubnetId": {
+          "Ref": "zero2prodvpczero2prodpublicSubnet2Subnet5AB0BE33",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "zero2prodvpczero2prodpublicSubnet2RouteTableDFBAC242": {
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc/zero2prod-publicSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "zero2prodvpczero2prodpublicSubnet2Subnet5AB0BE33": {
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.1.0/24",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "zero2prod-public",
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          {
+            "Key": "Name",
+            "Value": "test/zero2prod-vpc/zero2prod-publicSubnet2",
+          },
+        ],
+        "VpcId": {
+          "Ref": "zero2prodvpc6BD97168",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`Snapshot 2`] = `
+{
+  "Outputs": {
+    "ExportsOutputFnGetAttzero2prodrepo1FBA96A7ArnB90B0632": {
+      "Export": {
+        "Name": "test-repo:ExportsOutputFnGetAttzero2prodrepo1FBA96A7ArnB90B0632",
+      },
+      "Value": {
+        "Fn::GetAtt": [
+          "zero2prodrepo1FBA96A7",
+          "Arn",
+        ],
+      },
+    },
+    "ExportsOutputRefzero2prodrepo1FBA96A77FF4CB5B": {
+      "Export": {
+        "Name": "test-repo:ExportsOutputRefzero2prodrepo1FBA96A77FF4CB5B",
+      },
+      "Value": {
+        "Ref": "zero2prodrepo1FBA96A7",
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "zero2prodrepo1FBA96A7": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "RepositoryName": "zero2prod",
+      },
+      "Type": "AWS::ECR::Repository",
+      "UpdateReplacePolicy": "Delete",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`Snapshot 3`] = `
+{
+  "Outputs": {
+    "zero2prodserviceLoadBalancerDNS1CC472CF": {
+      "Value": {
+        "Fn::GetAtt": [
+          "zero2prodserviceLB2D500EC1",
+          "DNSName",
+        ],
+      },
+    },
+    "zero2prodserviceServiceURL8947D093": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "http://",
+            {
+              "Fn::GetAtt": [
+                "zero2prodserviceLB2D500EC1",
+                "DNSName",
+              ],
+            },
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "EcsDefaultClusterMnL3mNNYNzero2prodvpc87A02FCA": {
+      "Type": "AWS::ECS::Cluster",
+    },
+    "testappzero2proddbSecret8CA419083fdaad7efa858a3daf9490cf0a702aeb": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "Description": {
+          "Fn::Join": [
+            "",
+            [
+              "Generated by the CDK for stack: ",
+              {
+                "Ref": "AWS::StackName",
+              },
+            ],
+          ],
+        },
+        "GenerateSecretString": {
+          "ExcludeCharacters": " %+~\`#$&*()|[]{}:;<>?!'/@"\\",
+          "GenerateStringKey": "password",
+          "PasswordLength": 30,
+          "SecretStringTemplate": "{"username":"postgres"}",
+        },
+      },
+      "Type": "AWS::SecretsManager::Secret",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "zero2proddbD786D62C": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AllocatedStorage": "20",
+        "CopyTagsToSnapshot": true,
+        "DBInstanceClass": "db.t3.micro",
+        "DBName": "newsletter",
+        "DBSubnetGroupName": {
+          "Ref": "zero2proddbSubnetGroupFED33876",
+        },
+        "DeleteAutomatedBackups": true,
+        "EnableIAMDatabaseAuthentication": true,
+        "Engine": "postgres",
+        "EngineVersion": "16.6",
+        "MasterUserPassword": {
+          "Fn::Join": [
+            "",
+            [
+              "{{resolve:secretsmanager:",
+              {
+                "Ref": "testappzero2proddbSecret8CA419083fdaad7efa858a3daf9490cf0a702aeb",
+              },
+              ":SecretString:password::}}",
+            ],
+          ],
+        },
+        "MasterUsername": "postgres",
+        "PubliclyAccessible": false,
+        "StorageType": "gp2",
+        "VPCSecurityGroups": [
+          {
+            "Fn::GetAtt": [
+              "zero2proddbSecurityGroupA550F3A5",
+              "GroupId",
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBInstance",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "zero2proddbSecretAttachment63CAA970": {
+      "Properties": {
+        "SecretId": {
+          "Ref": "testappzero2proddbSecret8CA419083fdaad7efa858a3daf9490cf0a702aeb",
+        },
+        "TargetId": {
+          "Ref": "zero2proddbD786D62C",
+        },
+        "TargetType": "AWS::RDS::DBInstance",
+      },
+      "Type": "AWS::SecretsManager::SecretTargetAttachment",
+    },
+    "zero2proddbSecurityGroupA550F3A5": {
+      "Properties": {
+        "GroupDescription": "Security group for zero2prod-db database",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": {
+          "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpc6BD971688AD6DC23",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "zero2proddbSecurityGroupfromtestappzero2prodserviceServiceSecurityGroupEAC98145IndirectPort34B8A233": {
+      "Properties": {
+        "Description": "from testappzero2prodserviceServiceSecurityGroupEAC98145:{IndirectPort}",
+        "FromPort": {
+          "Fn::GetAtt": [
+            "zero2proddbD786D62C",
+            "Endpoint.Port",
+          ],
+        },
+        "GroupId": {
+          "Fn::GetAtt": [
+            "zero2proddbSecurityGroupA550F3A5",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "SourceSecurityGroupId": {
+          "Fn::GetAtt": [
+            "zero2prodserviceServiceSecurityGroupD6591385",
+            "GroupId",
+          ],
+        },
+        "ToPort": {
+          "Fn::GetAtt": [
+            "zero2proddbD786D62C",
+            "Endpoint.Port",
+          ],
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroupIngress",
+    },
+    "zero2proddbSubnetGroupFED33876": {
+      "Properties": {
+        "DBSubnetGroupDescription": "Subnet group for zero2prod-db database",
+        "SubnetIds": [
+          {
+            "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpczero2prodisolatedSubnet1Subnet691322E53FFB74F9",
+          },
+          {
+            "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpczero2prodisolatedSubnet2Subnet152D1A074EC0BD96",
+          },
+        ],
+      },
+      "Type": "AWS::RDS::DBSubnetGroup",
+    },
+    "zero2prodloggroupA5A93655": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "LogGroupName": "/ecs/zero2prod",
+        "RetentionInDays": 7,
+      },
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "zero2prodserviceLB2D500EC1": {
+      "Properties": {
+        "LoadBalancerAttributes": [
+          {
+            "Key": "deletion_protection.enabled",
+            "Value": "false",
+          },
+        ],
+        "Scheme": "internet-facing",
+        "SecurityGroups": [
+          {
+            "Fn::GetAtt": [
+              "zero2prodserviceLBSecurityGroupC7F0ED82",
+              "GroupId",
+            ],
+          },
+        ],
+        "Subnets": [
+          {
+            "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpczero2prodpublicSubnet1SubnetB6AF6A57CBD71B58",
+          },
+          {
+            "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpczero2prodpublicSubnet2Subnet5AB0BE33961D12E7",
+          },
+        ],
+        "Type": "application",
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+    },
+    "zero2prodserviceLBPublicListener1C7837F8": {
+      "Properties": {
+        "DefaultActions": [
+          {
+            "TargetGroupArn": {
+              "Ref": "zero2prodserviceLBPublicListenerECSGroup7D624852",
+            },
+            "Type": "forward",
+          },
+        ],
+        "LoadBalancerArn": {
+          "Ref": "zero2prodserviceLB2D500EC1",
+        },
+        "Port": 80,
+        "Protocol": "HTTP",
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::Listener",
+    },
+    "zero2prodserviceLBPublicListenerECSGroup7D624852": {
+      "Properties": {
+        "HealthCheckPath": "/health_check",
+        "HealthCheckPort": "8000",
+        "Port": 80,
+        "Protocol": "HTTP",
+        "TargetGroupAttributes": [
+          {
+            "Key": "stickiness.enabled",
+            "Value": "false",
+          },
+        ],
+        "TargetType": "ip",
+        "VpcId": {
+          "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpc6BD971688AD6DC23",
+        },
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+    },
+    "zero2prodserviceLBSecurityGroupC7F0ED82": {
+      "Properties": {
+        "GroupDescription": "Automatically created Security Group for ELB testappzero2prodserviceLB62A4FD79",
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow from anyone on port 80",
+            "FromPort": 80,
+            "IpProtocol": "tcp",
+            "ToPort": 80,
+          },
+        ],
+        "VpcId": {
+          "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpc6BD971688AD6DC23",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "zero2prodserviceLBSecurityGrouptotestappzero2prodserviceServiceSecurityGroupEAC981458000820DFC6F": {
+      "Properties": {
+        "Description": "Load balancer to target",
+        "DestinationSecurityGroupId": {
+          "Fn::GetAtt": [
+            "zero2prodserviceServiceSecurityGroupD6591385",
+            "GroupId",
+          ],
+        },
+        "FromPort": 8000,
+        "GroupId": {
+          "Fn::GetAtt": [
+            "zero2prodserviceLBSecurityGroupC7F0ED82",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "ToPort": 8000,
+      },
+      "Type": "AWS::EC2::SecurityGroupEgress",
+    },
+    "zero2prodserviceServiceF6A773E1": {
+      "DependsOn": [
+        "zero2prodserviceLBPublicListenerECSGroup7D624852",
+        "zero2prodserviceLBPublicListener1C7837F8",
+        "zero2prodserviceTaskDefTaskRoleDefaultPolicy17A22B63",
+        "zero2prodserviceTaskDefTaskRoleC12E278B",
+      ],
+      "Properties": {
+        "Cluster": {
+          "Ref": "EcsDefaultClusterMnL3mNNYNzero2prodvpc87A02FCA",
+        },
+        "DeploymentConfiguration": {
+          "Alarms": {
+            "AlarmNames": [],
+            "Enable": false,
+            "Rollback": false,
+          },
+          "MaximumPercent": 200,
+          "MinimumHealthyPercent": 50,
+        },
+        "EnableECSManagedTags": false,
+        "HealthCheckGracePeriodSeconds": 60,
+        "LaunchType": "FARGATE",
+        "LoadBalancers": [
+          {
+            "ContainerName": "web",
+            "ContainerPort": 8000,
+            "TargetGroupArn": {
+              "Ref": "zero2prodserviceLBPublicListenerECSGroup7D624852",
+            },
+          },
+        ],
+        "NetworkConfiguration": {
+          "AwsvpcConfiguration": {
+            "AssignPublicIp": "DISABLED",
+            "SecurityGroups": [
+              {
+                "Fn::GetAtt": [
+                  "zero2prodserviceServiceSecurityGroupD6591385",
+                  "GroupId",
+                ],
+              },
+            ],
+            "Subnets": [
+              {
+                "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpczero2prodisolatedSubnet1Subnet691322E53FFB74F9",
+              },
+              {
+                "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpczero2prodisolatedSubnet2Subnet152D1A074EC0BD96",
+              },
+            ],
+          },
+        },
+        "TaskDefinition": {
+          "Ref": "zero2prodserviceTaskDef1B1CACE7",
+        },
+      },
+      "Type": "AWS::ECS::Service",
+    },
+    "zero2prodserviceServiceSecurityGroupD6591385": {
+      "DependsOn": [
+        "zero2prodserviceTaskDefTaskRoleDefaultPolicy17A22B63",
+        "zero2prodserviceTaskDefTaskRoleC12E278B",
+      ],
+      "Properties": {
+        "GroupDescription": "test-app/zero2prod-service/Service/SecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1",
+          },
+        ],
+        "VpcId": {
+          "Fn::ImportValue": "test:ExportsOutputRefzero2prodvpc6BD971688AD6DC23",
+        },
+      },
+      "Type": "AWS::EC2::SecurityGroup",
+    },
+    "zero2prodserviceServiceSecurityGroupfromtestappzero2prodserviceLBSecurityGroup5D9D33B6800074A54837": {
+      "DependsOn": [
+        "zero2prodserviceTaskDefTaskRoleDefaultPolicy17A22B63",
+        "zero2prodserviceTaskDefTaskRoleC12E278B",
+      ],
+      "Properties": {
+        "Description": "Load balancer to target",
+        "FromPort": 8000,
+        "GroupId": {
+          "Fn::GetAtt": [
+            "zero2prodserviceServiceSecurityGroupD6591385",
+            "GroupId",
+          ],
+        },
+        "IpProtocol": "tcp",
+        "SourceSecurityGroupId": {
+          "Fn::GetAtt": [
+            "zero2prodserviceLBSecurityGroupC7F0ED82",
+            "GroupId",
+          ],
+        },
+        "ToPort": 8000,
+      },
+      "Type": "AWS::EC2::SecurityGroupIngress",
+    },
+    "zero2prodserviceTaskDef1B1CACE7": {
+      "Properties": {
+        "ContainerDefinitions": [
+          {
+            "Environment": [
+              {
+                "Name": "RDS_HOST",
+                "Value": {
+                  "Fn::GetAtt": [
+                    "zero2proddbD786D62C",
+                    "Endpoint.Address",
+                  ],
+                },
+              },
+              {
+                "Name": "RDS_PORT",
+                "Value": {
+                  "Fn::GetAtt": [
+                    "zero2proddbD786D62C",
+                    "Endpoint.Port",
+                  ],
+                },
+              },
+              {
+                "Name": "RDS_USER",
+                "Value": "service_user",
+              },
+              {
+                "Name": "RDS_SECRET_NAME",
+                "Value": {
+                  "Ref": "zero2proddbSecretAttachment63CAA970",
+                },
+              },
+            ],
+            "Essential": true,
+            "Image": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Select": [
+                      4,
+                      {
+                        "Fn::Split": [
+                          ":",
+                          {
+                            "Fn::ImportValue": "test-repo:ExportsOutputFnGetAttzero2prodrepo1FBA96A7ArnB90B0632",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  ".dkr.ecr.",
+                  {
+                    "Fn::Select": [
+                      3,
+                      {
+                        "Fn::Split": [
+                          ":",
+                          {
+                            "Fn::ImportValue": "test-repo:ExportsOutputFnGetAttzero2prodrepo1FBA96A7ArnB90B0632",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix",
+                  },
+                  "/",
+                  {
+                    "Fn::ImportValue": "test-repo:ExportsOutputRefzero2prodrepo1FBA96A77FF4CB5B",
+                  },
+                  ":latest",
+                ],
+              ],
+            },
+            "LogConfiguration": {
+              "LogDriver": "awslogs",
+              "Options": {
+                "awslogs-group": {
+                  "Ref": "zero2prodloggroupA5A93655",
+                },
+                "awslogs-region": {
+                  "Ref": "AWS::Region",
+                },
+                "awslogs-stream-prefix": "fargate-service",
+              },
+            },
+            "Name": "web",
+            "PortMappings": [
+              {
+                "ContainerPort": 8000,
+                "Protocol": "tcp",
+              },
+            ],
+          },
+        ],
+        "Cpu": "256",
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "zero2prodserviceTaskDefExecutionRole4924C054",
+            "Arn",
+          ],
+        },
+        "Family": "testappzero2prodserviceTaskDef499AFA0B",
+        "Memory": "512",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": [
+          "FARGATE",
+        ],
+        "TaskRoleArn": {
+          "Fn::GetAtt": [
+            "zero2prodserviceTaskDefTaskRoleC12E278B",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ECS::TaskDefinition",
+    },
+    "zero2prodserviceTaskDefExecutionRole4924C054": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "zero2prodserviceTaskDefExecutionRoleDefaultPolicyEEEE8C44": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::ImportValue": "test-repo:ExportsOutputFnGetAttzero2prodrepo1FBA96A7ArnB90B0632",
+              },
+            },
+            {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            {
+              "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "zero2prodloggroupA5A93655",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "zero2prodserviceTaskDefExecutionRoleDefaultPolicyEEEE8C44",
+        "Roles": [
+          {
+            "Ref": "zero2prodserviceTaskDefExecutionRole4924C054",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "zero2prodserviceTaskDefTaskRoleC12E278B": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ecs-tasks.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "zero2prodserviceTaskDefTaskRoleDefaultPolicy17A22B63": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Ref": "zero2proddbSecretAttachment63CAA970",
+              },
+            },
+            {
+              "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "zero2prodloggroupA5A93655",
+                  "Arn",
+                ],
+              },
+            },
+            {
+              "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::ImportValue": "test-repo:ExportsOutputFnGetAttzero2prodrepo1FBA96A7ArnB90B0632",
+              },
+            },
+            {
+              "Action": "ecr:GetAuthorizationToken",
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "zero2prodserviceTaskDefTaskRoleDefaultPolicy17A22B63",
+        "Roles": [
+          {
+            "Ref": "zero2prodserviceTaskDefTaskRoleC12E278B",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
